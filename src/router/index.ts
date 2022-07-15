@@ -5,8 +5,8 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Root',
-    component: () => import('../views/layout/index.vue'),
     redirect: '/home',
+    component: () => import('src/views/home/index.vue'),
     children: [
       {
         path: '/home',
@@ -15,43 +15,7 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           title: 'Home'
         }
-      },
-      {
-        path: '/game',
-        name: 'Game',
-        component: () => import('src/views/game/index.vue'),
-        meta: {
-          title: 'Game'
-        },
-        redirect: '/game/pve-wildmonster',
-        children: [
-          {
-            path: '/game/pve-wildmonster',
-            name: 'PVE-WildMonster',
-            component: () => import('src/views/game/pve-wild-monster/index.vue'),
-            meta: {
-              title: 'PVE-WildMonster'
-            }
-          },
-          {
-            path: '/game/mining',
-            name: 'Mining',
-            component: () => import('src/views/game/mining/index.vue'),
-            meta: {
-              title: 'Mining'
-            }
-          },
-        ]
-      },
-      {
-        path: '/user',
-        name: 'User',
-        component: () => import('src/views/user/index.vue'),
-        meta: {
-          title: 'User'
-        }
-      },
-
+      }
     ]
   }
 ]

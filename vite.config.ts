@@ -5,7 +5,6 @@ import { resolve } from 'path'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import { configCompressPlugin } from './build/plugin/compress'
-import { configImageminPlugin } from './build/plugin/imagemin'
 import { viteMockServe } from 'vite-plugin-mock'
 import nodePolyfills from 'rollup-plugin-polyfill-node'
 import Components from 'unplugin-vue-components/vite'
@@ -46,7 +45,7 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
         VITE_BUILD_COMPRESS as 'gzip' | 'brotli' | 'none',
         VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE === 'true'
       ),
-      VITE_USE_IMAGEMIN === 'true' && configImageminPlugin()
+      // VITE_USE_IMAGEMIN === 'true' && configImageminPlugin()
     ],
     resolve: {
       alias: {
