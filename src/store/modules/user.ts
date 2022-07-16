@@ -5,14 +5,16 @@ import { User } from 'src/api'
 import { HeroInfo } from 'types/store'
 interface UserState {
   userInfo: UserInfo | null,
-  heroList: HeroInfo[] | null
+  heroList: HeroInfo[] | null,
+  walletAddress: string | null
 }
 
 export const useUserStore = defineStore({
   id: 'app-user',
   state: (): UserState => ({
     userInfo: null,
-    heroList: []
+    heroList: [],
+    walletAddress: null
   }),
   getters: {
     getUserInfo(): UserInfo | null {
@@ -25,6 +27,9 @@ export const useUserStore = defineStore({
     },
     setUserInfo(info: UserInfo | null) {
       this.userInfo = info
+    },
+    setWalletAddress(walletAddress: any | null) {
+      this.walletAddress = walletAddress
     },
     resetState() {
       this.userInfo = null

@@ -3,9 +3,14 @@
 
 <template>
   <el-config-provider :message="{ max: 1 }">
-    <div>123</div>
     <router-view></router-view>
   </el-config-provider>
 </template>
 
-<style></style>
+<style>
+body {
+  background: #333333;
+  color: #FFFFFF;
+  font-family: Aldrich!important;
+}
+</style>
