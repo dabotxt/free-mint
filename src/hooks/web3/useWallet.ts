@@ -30,7 +30,7 @@ export function useWallet() {
     web3instance.eth.net.getId((error: Error, id: number) => {
       console.log(error)
       if (id !== 1) {
-        switchChain('0x1')
+        // switchChain('0x1')
       }
     })
     console.log(web3Modal)

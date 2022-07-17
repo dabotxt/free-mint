@@ -3,18 +3,49 @@ import { useNamespace } from 'src/hooks/useCommon'
 import { useWallet } from 'hooks/web3/useWallet'
 import { useTools } from 'hooks/useTools'
 import { useUserStore } from 'src/store/modules/user'
-import { computed, onMounted } from 'vue'
+import { useLoading } from 'src/hooks/useLoading'
+import { useMint } from 'hooks/web3/useMint'
+import { ElMessage } from 'element-plus'
+import { computed, onMounted, reactive, toRefs } from 'vue'
+const { setLoading } = useLoading()
 const User = useUserStore()
 const { onConnect } = useWallet()
+const { getNumberMinted, Mint } = useMint()
 const { hideSensitive } = useTools()
 const prefixCls = useNamespace('home')
 const connect = async () => {
   if (!account.value) {
     await onConnect()
   } else {
-    alert('mint')
+    await setLoading(true)
+    // alert('mint')
+    const val = await getNumberMinted()
+    if (val < 3) {
+      const res = await Mint(state.countState + 1)
+      console.log(res)
+    } else {
+      ElMessage({
+        message: 'You ve already minted 3 NFTs, do not be greedy.',
+        type: 'warning'
+      })
+    }
+    await setLoading(false)
   }
 }
+const state = reactive({
+  countList: [
+    {
+      name: '1 NFT'
+    },
+    {
+      name: '2 NFTs'
+    },
+    {
+      name: '3 NFTs'
+    }
+  ],
+  countState: 0
+})
 const account = computed(() => {
   return User.walletAddress
 })
@@ -24,6 +55,7 @@ onMounted(() => {
     User.setWalletAddress(account)
   }
 })
+const { countList, countState } = toRefs(state)
 </script>
 
 <template>
@@ -31,6 +63,9 @@ onMounted(() => {
     <div class="context">
       <div class="title">Free mint remains</div>
       <div class="count">12,000</div>
+      <div class="count-content">
+        <div class="count-item" :class="countState === index ? 'active' : ''" @click="countState = index" v-for="(item, index) in countList" :key="index">{{ item.name }}</div>
+      </div>
       <div class="button" @click="connect">{{ !account ? 'Connect Wallet' : 'Free Mint' }}</div>
       <div class="account" v-if="account">Wallet：{{ hideSensitive(account, 4, 4) }}</div>
     </div>
@@ -55,6 +90,29 @@ $mobile-prefix-cls: '#{$namespace}-m-#{$moduleName}';
       font-size: 40px;
       margin: 30px 0;
       font-weight: bold;
+    }
+    .count-content {
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .count-item {
+        width: 80px;
+        height: 40px;
+        border: 2px solid #B9B6AC;
+        border-radius: 6px;
+        text-align: center;
+        line-height: 40px;
+        font-size: 16px;
+        cursor: pointer;
+        &:nth-of-type(2) {
+          margin: 0 52px;
+        }
+      }
+      .active {
+        color: #FCD535;
+        border: 2px solid #FCD535;
+      }
     }
     .button {
       width: 300px;
