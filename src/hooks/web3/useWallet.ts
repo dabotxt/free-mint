@@ -19,8 +19,10 @@ const walletInfo: WalletInfo = reactive({
   account: null
 })
 export function useWallet() {
-  !web3Modal.value && initWeb3Modal()
-
+  if (!web3Modal.value) {
+    initWeb3Modal()
+    onEvents()
+  }
   function initWeb3Modal () {
     web3Modal.value = new Web3Modal({
       cacheProvider: true,
@@ -34,6 +36,19 @@ export function useWallet() {
       }
     })
     console.log(web3Modal)
+  }
+  async function onEvents () {
+    await window.ethereum.on('accountsChanged', async (accounts: string[]) => {
+      const user = useUserStore()
+      if (accounts.length > 0) {
+        user.setWalletAddress(accounts[0])
+        sessionStorage.setItem('walletAddress', accounts[0])
+      } else {
+        sessionStorage.removeItem('walletAddress')
+      }
+    });
+    window.ethereum.on('message',  () => {
+    });
   }
   const switchChain = ((chainId: string) => {
     window.ethereum.request({

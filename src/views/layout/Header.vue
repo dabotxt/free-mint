@@ -31,6 +31,9 @@ $mobile-prefix-cls: '#{$namespace}-m-#{$moduleName}';
   .right {
     display: flex;
     img {
+      width: 38px;
+      height: 38px;
+      cursor: pointer;
       &:nth-of-type(2) {
         margin: 0 70px;
       }
