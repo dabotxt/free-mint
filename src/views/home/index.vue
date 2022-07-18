@@ -39,7 +39,7 @@ const connect = async () => {
         })
     } else {
       ElMessage({
-        message: 'You can create up to 3 NFTs, do not be greedy.',
+        message: 'You can minted up to 3 NFTs, do not be greedy.',
         type: 'warning'
       })
     }
