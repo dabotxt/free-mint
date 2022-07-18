@@ -18,14 +18,28 @@ const connect = async () => {
     await onConnect()
   } else {
     await setLoading(true)
-    // alert('mint')
     const val = await getNumberMinted()
-    if (val < 3) {
-      const res = await Mint(state.countState + 1)
-      console.log(res)
+    const count = parseInt(val) + state.countState + 1
+    if (count < 4) {
+      await Mint(state.countState + 1)
+        .then(async (res: any) => {
+          console.log(res)
+          ElMessage({
+            message: 'Mint successfully!',
+            type: 'success'
+          })
+          await setLoading(false)
+        })
+        .catch(async (error: any) => {
+          ElMessage({
+            message: error.message,
+            type: 'error'
+          })
+          await setLoading(false)
+        })
     } else {
       ElMessage({
-        message: 'You ve already minted 3 NFTs, do not be greedy.',
+        message: 'You can create up to 3 NFTs, do not be greedy.',
         type: 'warning'
       })
     }
@@ -63,7 +77,7 @@ const { countList, countState } = toRefs(state)
     <div class="context">
       <div class="title">Free mint remains</div>
       <div class="count">12,000</div>
-      <div class="count-content">
+      <div class="count-content" v-if="account">
         <div class="count-item" :class="countState === index ? 'active' : ''" @click="countState = index" v-for="(item, index) in countList" :key="index">{{ item.name }}</div>
       </div>
       <div class="button" @click="connect">{{ !account ? 'Connect Wallet' : 'Free Mint' }}</div>
