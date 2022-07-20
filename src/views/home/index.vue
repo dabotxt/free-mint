@@ -5,6 +5,7 @@ import { useTools } from 'hooks/useTools'
 import { useUserStore } from 'src/store/modules/user'
 import { useLoading } from 'src/hooks/useLoading'
 import { useMint } from 'hooks/web3/useMint'
+import { whiteToLowerCase } from 'hooks/web3/whitelist'
 import { ElMessage } from 'element-plus'
 import { computed, onMounted, reactive, toRefs } from 'vue'
 const { setLoading } = useLoading()
@@ -17,34 +18,41 @@ const connect = async () => {
   if (!account.value) {
     await onConnect()
   } else {
-    await setLoading(true)
-    const val = await getNumberMinted()
-    const count = parseInt(val) + state.countState + 1
-    if (count < 4) {
-      await Mint(state.countState + 1)
-        .then(async (res: any) => {
-          console.log(res)
-          ElMessage({
-            message: 'Mint successfully!',
-            type: 'success'
+    const address = account.value?.toLowerCase()
+    if (whiteToLowerCase.value.includes(address)) {
+      await setLoading(true)
+      const val = await getNumberMinted()
+      const count = parseInt(val) + state.countState + 1
+      if (count < 4) {
+        await Mint(state.countState + 1)
+          .then(async (res: any) => {
+            console.log(res)
+            ElMessage({
+              message: 'Mint successfully!',
+              type: 'success'
+            })
+            await setLoading(false)
           })
-          await setLoading(false)
-        })
-        .catch(async (error: any) => {
-          ElMessage({
-            message: error.message,
-            type: 'error'
+          .catch(async (error: any) => {
+            ElMessage({
+              message: error.message,
+              type: 'error'
+            })
+            await setLoading(false)
           })
-          await setLoading(false)
+      } else {
+        ElMessage({
+          message: 'You can only mint up to 3 NFTs, do not be greedy.',
+          type: 'warning'
         })
+      }
+      await setLoading(false)
     } else {
-
       ElMessage({
-        message: 'You can only mint up to 3 NFTs, do not be greedy.',
+        message: 'Sorry! you are not on the Whitelist, please contact Dune team to acquire.',
         type: 'warning'
       })
     }
-    await setLoading(false)
   }
 }
 const state = reactive({
