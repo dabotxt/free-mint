@@ -100,6 +100,12 @@ $moduleName: 'home';
 $prefix-cls: '#{$namespace}-#{$moduleName}';
 $mobile-prefix-cls: '#{$namespace}-m-#{$moduleName}';
 .#{$prefix-cls} {
+  height: calc(100vh - 204px);
+  //background-image: url("src/assets/img/home/footer.gif");
+  //background-size: auto 534px;
+  //background-position: center;
+  //background-repeat: no-repeat;
+  //background-position-y: bottom;
   .context {
     width: 100%;
     position: absolute;

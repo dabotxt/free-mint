@@ -20,8 +20,11 @@ $moduleName: 'layout';
 $prefix-cls: '#{$namespace}-#{$moduleName}';
 $mobile-prefix-cls: '#{$namespace}-m-#{$moduleName}';
 .#{$prefix-cls} {
-  background-image: url("src/assets/img/home/pc-background.webp");
   height: 100vh;
+  //background: rgba(20, 18, 24, 1) url("src/assets/img/home/header-round.gif") no-repeat center;
+  //background-position-y: 0;
+  background-image: url("src/assets/img/home/test.gif");
+  background-position: center;
   background-size: cover;
   ::v-deep(.el-loading-mask) {
     display: none;
@@ -29,7 +32,8 @@ $mobile-prefix-cls: '#{$namespace}-m-#{$moduleName}';
 }
 @media screen and (max-width: 750px) {
   .#{$prefix-cls} {
-    background-image: url("src/assets/img/home/mobile-background.webp");
+    //background-size: 277.5px 240px;
+    //background-position-y: 120px;
   }
 }
 </style>

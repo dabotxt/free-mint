@@ -25,6 +25,7 @@ $mobile-prefix-cls: '#{$namespace}-m-#{$moduleName}';
   display: flex;
   align-items: center;
   justify-content: space-between;
+  z-index: 10;
   .mobile-logo {
     display: none;
   }
