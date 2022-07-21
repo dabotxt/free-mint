@@ -23,7 +23,7 @@ $mobile-prefix-cls: '#{$namespace}-m-#{$moduleName}';
   height: 100vh;
   //background: rgba(20, 18, 24, 1) url("src/assets/img/home/header-round.gif") no-repeat center;
   //background-position-y: 0;
-  background-image: url("src/assets/img/home/test.gif");
+  background-image: url("src/assets/img/home/background-cover.gif");
   background-position: center;
   background-size: cover;
   ::v-deep(.el-loading-mask) {
