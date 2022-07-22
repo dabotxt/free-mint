@@ -10,7 +10,7 @@ import { ElMessage } from 'element-plus'
 import { computed, onMounted, reactive, toRefs } from 'vue'
 const { setLoading } = useLoading()
 const User = useUserStore()
-const { onConnect } = useWallet()
+const { onConnect, resetWallet } = useWallet()
 const { getNumberMinted, Mint } = useMint()
 const { hideSensitive } = useTools()
 const prefixCls = useNamespace('home')
@@ -72,6 +72,12 @@ const state = reactive({
 const account = computed(() => {
   return User.walletAddress
 })
+const disconnect = (async () => {
+  localStorage.clear()
+  sessionStorage.clear()
+  User.setWalletAddress(null)
+  await resetWallet()
+})
 onMounted(() => {
   const account = sessionStorage.getItem('walletAddress')
   if (account) {
@@ -91,6 +97,7 @@ const { countList, countState } = toRefs(state)
       </div>
       <div class="button" @click="connect">{{ !account ? 'Connect Wallet' : 'Free Mint' }}</div>
       <div class="account" v-if="account">Wallet：{{ hideSensitive(account, 4, 4) }}</div>
+      <div class="disconnect" v-if="account" @click="disconnect">Disconnect</div>
     </div>
   </div>
 </template>
@@ -159,6 +166,11 @@ $mobile-prefix-cls: '#{$namespace}-m-#{$moduleName}';
     .account {
       font-size: 24px;
       margin-top: 20px;
+    }
+    .disconnect {
+      font-size: 24px;
+      margin-top: 10px;
+      cursor: pointer;
     }
   }
 }

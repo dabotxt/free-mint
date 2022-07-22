@@ -91,7 +91,9 @@ export function useWallet() {
     walletInfo.web3 = web3
     getAccounts()
   }
-
+  const closeApp = async () => {
+    await walletInfo.web3.currentProvider.close()
+  }
   const resetWallet = async () => {
     await walletInfo.web3?.currentProvider?.close?.()
     web3Modal.value.clearCachedProvider()
@@ -107,6 +109,7 @@ export function useWallet() {
     ...toRefs(walletInfo),
     onConnect,
     resetWallet,
-    checkConnect
+    checkConnect,
+    closeApp
   }
 }
