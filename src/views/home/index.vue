@@ -10,7 +10,7 @@ import { ElMessage } from 'element-plus'
 import { computed, onMounted, reactive, toRefs } from 'vue'
 const { setLoading } = useLoading()
 const User = useUserStore()
-const { onConnect, resetWallet } = useWallet()
+const { onConnect, resetWallet, switchChain } = useWallet()
 const { getNumberMinted, Mint } = useMint()
 const { hideSensitive } = useTools()
 const prefixCls = useNamespace('home')
@@ -84,6 +84,9 @@ onMounted(() => {
     User.setWalletAddress(account)
   }
 })
+// const test = (() => {
+//   switchChain('0x1')
+// })
 const { countList, countState } = toRefs(state)
 </script>
 

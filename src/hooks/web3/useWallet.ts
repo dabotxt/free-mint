@@ -2,6 +2,7 @@ import Web3Modal, { providers } from 'web3modal'
 import { providerOptions } from './config'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 import { useUserStore } from 'src/store/modules/user'
+import { ElMessage } from 'element-plus'
 import Web3 from 'web3/dist/web3.min.js'
 import { reactive, ref, toRefs } from 'vue'
 
@@ -25,6 +26,7 @@ export function useWallet() {
   }
   function initWeb3Modal () {
     web3Modal.value = new Web3Modal({
+      network: 'mainnet',
       cacheProvider: true,
       providerOptions
     })
@@ -51,15 +53,22 @@ export function useWallet() {
     });
   }
   const switchChain = ((chainId: string) => {
+    console.log(chainId)
     window.ethereum.request({
       method: 'wallet_switchEthereumChain',
       params: [{ chainId: chainId }],
     })
       .then(() => {
+        ElMessage({
+          message: 'success',
+          type: 'success'
+        })
         console.log('success')
-        location.reload()
+        // location.reload()
       })
       .catch((error: ErrorInfo) => {
+        console.log(666)
+        console.log(error)
         if (error.code === 4902) {
           // addChain()
         }
@@ -110,6 +119,7 @@ export function useWallet() {
     onConnect,
     resetWallet,
     checkConnect,
-    closeApp
+    closeApp,
+    switchChain
   }
 }
