@@ -81,9 +81,15 @@ const disconnect = (async () => {
   await resetWallet()
 })
 const getMargin = (async () => {
+
   const supply = await getTotalSupply()
   const total = await getTotalFree()
-  state.margin = parseInt(total) - parseInt(supply)
+  console.log(typeof (supply), typeof (total))
+  if (parseInt(supply) >= parseInt(total)) {
+    state.margin = 0
+  } else {
+    state.margin = parseInt(total) - parseInt(supply)
+  }
 })
 onMounted(async () => {
   const account = sessionStorage.getItem('walletAddress')

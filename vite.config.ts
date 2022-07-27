@@ -5,6 +5,7 @@ import { resolve } from 'path'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import { configCompressPlugin } from './build/plugin/compress'
+// import { configImageminPlugin } from './build/plugin/imagemin'
 import { viteMockServe } from 'vite-plugin-mock'
 import nodePolyfills from 'rollup-plugin-polyfill-node'
 import Components from 'unplugin-vue-components/vite'
@@ -21,7 +22,7 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
     VITE_BUILD_COMPRESS,
     VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE,
     VITE_DROP_CONSOLE,
-    VITE_USE_IMAGEMIN
+    // VITE_USE_IMAGEMIN
   } = env
   return {
     plugins: [
@@ -73,8 +74,8 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
       terserOptions: {
         compress: {
           // 生产环境时移除console
-          drop_console: VITE_DROP_CONSOLE === 'true',
-          drop_debugger: VITE_DROP_CONSOLE === 'true'
+          drop_console: true,
+          drop_debugger: true
         }
       },
       rollupOptions: {
