@@ -7,7 +7,8 @@ const whitelist = [
   '0x008659610263205Ab3E9Ab0Fb64c8C838Db73493',
   '0xF436db10a54978708aC2441f4B7E862E49c3967F',
   '0x77B92c1cbC0F858a299F0bE51a790FE7a9f46DCe',
-  '0xAAb283f80b97f461b7e64E33bb8fA2945D3199a3'
+  '0xAAb283f80b97f461b7e64E33bb8fA2945D3199a3',
+  '0x34253e44B2f425028BAb4481149889C58f1D95df'
 ]
 const whiteToLowerCase = computed(() => {
   const newList = whitelist.map((item, index) => {

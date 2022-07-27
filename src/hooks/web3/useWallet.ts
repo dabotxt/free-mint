@@ -33,8 +33,8 @@ export function useWallet() {
     web3instance = new Web3(Web3.givenProvider || 'ws://localhost:8545')
     web3instance.eth.net.getId((error: Error, id: number) => {
       console.log(error)
-      if (id !== 4) {
-        switchChain('0x4')
+      if (id !== 1) {
+        switchChain('0x1')
       }
     })
   }
