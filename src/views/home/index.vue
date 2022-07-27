@@ -182,8 +182,10 @@ $mobile-prefix-cls: '#{$namespace}-m-#{$moduleName}';
       margin-top: 20px;
     }
     .disconnect {
-      font-size: 24px;
+      font-size: 20px;
       margin-top: 10px;
+      text-decoration: underline;
+      color: #FCD535;
       cursor: pointer;
     }
   }
