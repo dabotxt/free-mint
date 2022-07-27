@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { useNamespace } from 'src/hooks/useCommon'
 const prefixCls = useNamespace('header')
+const jump = (url: string) => {
+  window.open(url, '_blank')
+}
 </script>
 
 <template>
@@ -8,8 +11,8 @@ const prefixCls = useNamespace('header')
     <img class="logo" src="src/assets/img/home/pc-logo.webp" alt="">
     <img class="mobile-logo" src="src/assets/img/home/mobile-logo.webp" alt="">
     <div class="right">
-      <img src="src/assets/img/home/social1.webp" alt="">
-      <img src="src/assets/img/home/social2.webp" alt="">
+      <img @click="jump('https://discord.gg/RAQ5r8yDb3')" src="src/assets/img/home/social1.webp" alt="">
+      <img @click="jump('https://twitter.com/DunePass')" src="src/assets/img/home/social2.webp" alt="">
       <img src="src/assets/img/home/social3.webp" alt="">
     </div>
   </div>

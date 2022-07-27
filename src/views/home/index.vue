@@ -10,13 +10,14 @@ import { ElMessage } from 'element-plus'
 import { computed, onMounted, reactive, toRefs } from 'vue'
 const { setLoading } = useLoading()
 const User = useUserStore()
-const { onConnect, resetWallet, switchChain } = useWallet()
-const { getNumberMinted, Mint } = useMint()
+const { onConnect, resetWallet } = useWallet()
+const { getNumberMinted, Mint, getTotalSupply, getTotalFree } = useMint()
 const { hideSensitive } = useTools()
 const prefixCls = useNamespace('home')
 const connect = async () => {
   if (!account.value) {
     await onConnect()
+    await getMargin()
   } else {
     const address = account.value?.toLowerCase()
     if (whiteToLowerCase.value.includes(address)) {
@@ -67,7 +68,8 @@ const state = reactive({
       name: '3 NFTs'
     }
   ],
-  countState: 0
+  countState: 0,
+  margin: '---' as any
 })
 const account = computed(() => {
   return User.walletAddress
@@ -78,23 +80,26 @@ const disconnect = (async () => {
   User.setWalletAddress(null)
   await resetWallet()
 })
-onMounted(() => {
+const getMargin = (async () => {
+  const supply = await getTotalSupply()
+  const total = await getTotalFree()
+  state.margin = parseInt(total) - parseInt(supply)
+})
+onMounted(async () => {
   const account = sessionStorage.getItem('walletAddress')
   if (account) {
     User.setWalletAddress(account)
+    await getMargin()
   }
 })
-// const test = (() => {
-//   switchChain('0x1')
-// })
-const { countList, countState } = toRefs(state)
+const { countList, countState, margin } = toRefs(state)
 </script>
 
 <template>
   <div :class="prefixCls.multiPrefixCls">
     <div class="context">
       <div class="title">Free mint remains</div>
-      <div class="count">12,000</div>
+      <div class="count">{{ margin }}</div>
       <div class="count-content" v-if="account">
         <div class="count-item" :class="countState === index ? 'active' : ''" @click="countState = index" v-for="(item, index) in countList" :key="index">{{ item.name }}</div>
       </div>

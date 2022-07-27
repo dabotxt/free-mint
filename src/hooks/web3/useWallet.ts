@@ -37,7 +37,6 @@ export function useWallet() {
         switchChain('0x4')
       }
     })
-    console.log(web3Modal)
   }
   async function onEvents () {
     await window.ethereum.on('accountsChanged', async (accounts: string[]) => {

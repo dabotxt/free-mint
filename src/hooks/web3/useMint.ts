@@ -12,6 +12,39 @@ export function useMint () {
     const { Contract } = web3.value.eth
     return new Contract(abi, contract)
   })
+  const getTotalFree = async (): Promise<any> => {
+    await checkConnect()
+    return new Promise((resolve, reject) => {
+      MintInstance.value.methods
+        .totalFree()
+        .call()
+        .then(async (res: any) => {
+          resolve(res)
+          console.log(res)
+        })
+        .catch((error: Error) => {
+          errorHandel(error, (errorInfo: ErrorInfo) => {
+            reject(errorInfo)
+          })
+        })
+    })
+  }
+  const getTotalSupply = async (): Promise<any> => {
+    await checkConnect()
+    return new Promise((resolve, reject) => {
+      MintInstance.value.methods
+        .totalSupply()
+        .call()
+        .then(async (res: any) => {
+          resolve(res)
+        })
+        .catch((error: Error) => {
+          errorHandel(error, (errorInfo: ErrorInfo) => {
+            reject(errorInfo)
+          })
+        })
+    })
+  }
   const getNumberMinted = async (): Promise<any> => {
     await checkConnect()
     const [account] = await web3.value.eth.getAccounts()
@@ -48,6 +81,8 @@ export function useMint () {
   }
   return {
     getNumberMinted,
-    Mint
+    Mint,
+    getTotalSupply,
+    getTotalFree
   }
 }
