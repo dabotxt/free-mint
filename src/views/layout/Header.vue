@@ -13,7 +13,7 @@ const jump = (url: string) => {
     <div class="right">
       <img @click="jump('https://discord.gg/RAQ5r8yDb3')" src="src/assets/img/home/social1.webp" alt="">
       <img @click="jump('https://twitter.com/DunePass')" src="src/assets/img/home/social2.webp" alt="">
-      <img src="src/assets/img/home/social3.webp" alt="">
+      <img @click="jump('https://opensea.io/collection/dune-pass')" src="src/assets/img/home/social3.webp" alt="">
     </div>
   </div>
 </template>
